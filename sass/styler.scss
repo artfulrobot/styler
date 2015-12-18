@@ -1,0 +1,90 @@
+// these styles are for the demo layouts only. {{{
+$v:1.5rem;
+body {
+  // background-image:repeating-linear-gradient(#f8f8f8 0, #f8f8f8 1px, transparent 1px, transparent $v);
+  background-size:100% 28px;
+  background-position:left -7px;
+  padding:$v 0;
+  margin:0;
+}
+#page-container {
+}
+.layout-container {
+  margin:0 auto;
+  max-width:1280px;
+  padding:0 1rem;
+}
+@media screen and (min-width:600px) {
+.layout-container {
+  padding:0 2rem;
+}
+}
+
+.swatch {
+  .sample {
+    display:inline-block;
+    margin-right:1rem;
+    margin-bottom:$v;
+    width:($v*5.5);
+    height:($v*5);
+    text-align:center;
+    padding:1rem;
+    box-shadow:2px 2px 8px rgba(0,0,0,0.3);
+    vertical-align:top;
+  }
+}
+#styler-header {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  min-height:$v;
+  background-color:#333;
+  color:white;
+  display:flex;
+  font-size:1rem;
+  padding:0 1rem;;
+  z-index:2;
+  a, a:visited {
+    color:white;
+  }
+  ul.styler-menu {
+    display:none;
+    position:absolute;
+    left:0;
+    margin:0;
+    padding:0;
+    min-width:20rem;
+    background-color:#333;
+    li {
+      list-style:none;
+      margin:0;
+      padding:0;
+      a {
+        display:block;
+        padding:(0.25*$v) 1rem;
+        &:hover {
+          background-color:#555;
+        }
+      }
+    }
+  }
+  &>div.styler-menu {
+    display:block;
+    position:relative;
+    margin-left:1rem;
+    margin-right:2rem;
+    padding:0 1rem;
+    min-height:$v;
+    a, a:visited {color:#eee;}
+    flex:0;
+
+    &:hover ul.styler-menu {
+      display:block;
+    }
+  }
+  &>div.title {
+    flex:1;
+  }
+}
+// }}}

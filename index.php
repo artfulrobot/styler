@@ -3,12 +3,39 @@ require './artfulrobot/ArtfulRobot/autoload.php';
 
 class Container
 {
-  public $config;
+  public $config = [
+    'lorem' => [
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu faucibus magna. In quam sapien, elementum et malesuada ornare, placerat vel libero. Nam eget ex purus. Nam et metus ipsum. Donec vitae porta purus. Nulla rutrum elementum commodo. Sed malesuada congue massa, sit amet posuere dolor consectetur sed.',
+      'Cras consequat consequat lectus, sed vulputate lorem ultricies eu. Morbi nibh mi, aliquam nec elementum a, congue eget urna. Sed ornare malesuada magna, vel rhoncus ex semper sit amet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Eorbi ac sem at nunc facilisis accumsan et dapibus ligula. Fusce sagittis finibus arcu, ac dignissim nibh venenatis vel. Quisque at purus sit amet enim ornare finibus. Maecenas ornare lobortis elementum.',
+      'Vivamus id felis nec ex malesuada consequat ut nec nunc. Integer rhoncus, nisl non pellentesque elementum, libero nisl sodales nulla, vitae dictum lorem nisi at lectus. Quisque ultricies est vel dui elementum ornare. Pellentesque consequat erat ut odio vehicula tristique. Integer ac neque ultricies, iaculis lorem id, tempor elit. Fusce nulla orci, aliquet a efficitur eget, mattis at purus. Donec vitae felis nisl. Sed nec purus dui. Aliquam ullamcorper, enim lobortis lobortis iaculis, mauris sapien tristique nisl, porta molestie dui nunc et sem. In rhoncus nunc nibh, eu tincidunt ipsum sodales sed. Aenean vitae dictum massa.',
+      'Praesent venenatis erat vel augue interdum efficitur. Aenean ultricies velit at purus vestibulum dignissim. Nulla tincidunt eu neque sit amet ultrices. Donec sagittis tellus sit amet ipsum finibus, a lobortis nunc porta. Pellentesque porta diam id nisi vulputate sollicitudin. Sed eget ultrices justo. Praesent at orci pellentesque, porta lacus eu, convallis enim. Nam aliquam ligula quis diam viverra, nec egestas nisl ultricies. Morbi magna nulla, congue eget aliquet sed, suscipit vel lorem. Nulla ut nulla eu leo pulvinar pellentesque a eu dolor. Pellentesque aliquam ornare sem id efficitur. Proin congue elit libero.',
+      'Phasellus laoreet sed odio gravida placerat. Sed eu mi ex. Donec sed quam vitae turpis rhoncus feugiat. Pellentesque posuere eleifend blandit. Aliquam erat volutpat. Morbi dapibus et enim sit amet malesuada. Nullam ut eros viverra sem tempor pretium. ',
+    ],
+    'headings' => [
+      'Event X is coming up soon.',
+      '5 out of 10 people don\'t think.',
+      'Most headlines are completely made up.',
+      'How we won our campaign',
+      'It\'s official: something amazing has happened.',
+    ],
+  ];
   public $controller;
+  public static $app;
 
-  public function __construct($config) {
-    $this->config = $config;
+  public function __construct() {
     $this->controller = new PageController($this);
+  }
+
+  public function configure($config) {
+    // Merge in config, take new config over old.
+    $this->config = $config + $this->config;
+
+    return $this;
+  }
+  public function getConfig($key) {
+    if (isset($this->config[$key])) {
+      return $this->config[$key];
+    }
   }
 
   public function item($tpl) {
@@ -19,6 +46,15 @@ class Container
   public function templater() {
     $t = new \ArtfulRobot\Template($this->config['templates_base']);
     return $t;
+  }
+  /**
+   * Returns singleton app.
+   */
+  public function app() {
+    if (!isset(static::$app)) {
+      static::$app = new static();
+    }
+    return static::$app;
   }
 }
 
@@ -142,14 +178,8 @@ class Item
 // Helper functions for templates
 function lorem($options=[]) {
   $options = $options + ['links'=>TRUE, 'strong'=>TRUE, 'words' => FALSE ];
+  $lorem = Container::app()->config['lorem'];
   static $i = null;
-  $lorem = [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu faucibus magna. In quam sapien, elementum et malesuada ornare, placerat vel libero. Nam eget ex purus. Nam et metus ipsum. Donec vitae porta purus. Nulla rutrum elementum commodo. Sed malesuada congue massa, sit amet posuere dolor consectetur sed.',
-    'Cras consequat consequat lectus, sed vulputate lorem ultricies eu. Morbi nibh mi, aliquam nec elementum a, congue eget urna. Sed ornare malesuada magna, vel rhoncus ex semper sit amet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Eorbi ac sem at nunc facilisis accumsan et dapibus ligula. Fusce sagittis finibus arcu, ac dignissim nibh venenatis vel. Quisque at purus sit amet enim ornare finibus. Maecenas ornare lobortis elementum.',
-    'Vivamus id felis nec ex malesuada consequat ut nec nunc. Integer rhoncus, nisl non pellentesque elementum, libero nisl sodales nulla, vitae dictum lorem nisi at lectus. Quisque ultricies est vel dui elementum ornare. Pellentesque consequat erat ut odio vehicula tristique. Integer ac neque ultricies, iaculis lorem id, tempor elit. Fusce nulla orci, aliquet a efficitur eget, mattis at purus. Donec vitae felis nisl. Sed nec purus dui. Aliquam ullamcorper, enim lobortis lobortis iaculis, mauris sapien tristique nisl, porta molestie dui nunc et sem. In rhoncus nunc nibh, eu tincidunt ipsum sodales sed. Aenean vitae dictum massa.',
-    'Praesent venenatis erat vel augue interdum efficitur. Aenean ultricies velit at purus vestibulum dignissim. Nulla tincidunt eu neque sit amet ultrices. Donec sagittis tellus sit amet ipsum finibus, a lobortis nunc porta. Pellentesque porta diam id nisi vulputate sollicitudin. Sed eget ultrices justo. Praesent at orci pellentesque, porta lacus eu, convallis enim. Nam aliquam ligula quis diam viverra, nec egestas nisl ultricies. Morbi magna nulla, congue eget aliquet sed, suscipit vel lorem. Nulla ut nulla eu leo pulvinar pellentesque a eu dolor. Pellentesque aliquam ornare sem id efficitur. Proin congue elit libero.',
-    'Phasellus laoreet sed odio gravida placerat. Sed eu mi ex. Donec sed quam vitae turpis rhoncus feugiat. Pellentesque posuere eleifend blandit. Aliquam erat volutpat. Morbi dapibus et enim sit amet malesuada. Nullam ut eros viverra sem tempor pretium. ',
-  ];
   if ($i === null) {
     $i = rand(0,count($lorem)-1);
   }
@@ -177,15 +207,9 @@ function lorem($options=[]) {
 }
 
 function heading($words) {
+  global $app;
   static $i = null;
-  $headings = [
-    'Book now: Student Activism Weekender',
-    'Fossil Free Aberdeen gate crashed University of Aberdeen investment committee to demand they join the 12 Unis',
-    'How you can take action',
-    'Find out more about Electronics Watch',
-    'Sheffield Divests from Fossil Fuels!',
-    'Universities and Human Rights',
-  ];
+  $headings = Container::app()->config['headings'];
   if ($i === null) {
     $i = rand(0,count($headings)-1);
   }
@@ -243,8 +267,10 @@ function preg_ls ($path=".", $rec=false, $pat="/.*/") {
 }
 
 
-$app = new Container([
-  'templates_base' => dirname(__FILE__) . "/templates/",
-  ]);
+$app = Container::app()
+  ->configure(['templates_base' => dirname(__FILE__) . "/templates/"]);
+
+include_once 'config.php';
+
 $tpl_path = isset($_GET['tpl']) ? $_GET['tpl'] : '';
 $app->controller->run($tpl_path);

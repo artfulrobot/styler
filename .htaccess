@@ -1,0 +1,8 @@
+# Only allow access to the index page.
+<Files "">
+  Require all granted
+</Files>
+<Files "index.php">
+  Require all granted
+</Files>
+Require all denied
