@@ -1,0 +1,451 @@
+// Vertical ryhthm unit.
+$baseFont: 1.25rem;
+$v: (1.4 * $baseFont);
+
+$cGrey: #383838;
+$cBrown: #58452b;
+$cGreenBg: #46851f;
+$cGreenFg: #315f16;
+$cAmber: #ffa018;
+$cPurple: #793588;
+$cPurple: #662a73; // darker is WGAC2 AAA.
+$cGreenLightBg: #c8dcbb;
+$cBlueGreyLightBg: #bad5dc;
+$cBlueGreyFg: #435d66;
+$cNeutralLightBg: #f4eef6;
+$cBlackFg: #222222;
+
+$cRed: #dd3333;
+
+$fBody: 'Source Sans Pro';
+@mixin fHeading {
+  font-family:'Share';
+  font-weight:bold;
+  font-style:italic;
+}
+@mixin fHeading {
+  font-family:'Economica';
+  font-weight:bold;
+  font-style:italic;
+}
+@mixin fHeading {
+  font-family:'Contrail One';
+  font-weight:normal;
+  font-style:normal;
+  letter-spacing: -0.04em;
+  text-transform:uppercase;
+}
+
+* {
+  box-sizing:inherit;
+}
+
+body {
+  box-sizing:border-box;
+  color:$cBlackFg;
+  font-family:$fBody;
+  font-size:1rem;
+  line-height:1.4;
+}
+@media screen and (min-width:600px) {
+  body {
+    font-size:$baseFont;
+  }
+}
+
+// Headings {{{
+h1, h2, h3 {
+  margin-top:$v;
+  color:$cPurple;
+  @include fHeading;
+  text-transform:uppercase;
+  margin-bottom:$v;
+  position:relative;
+}
+
+h1 { font-size: 3rem; line-height:($v*2);top:4px;  }
+h2 { font-size: 3rem; line-height:($v*2);top:4px; }
+// hmmm.
+h3 { font-size: 2rem; line-height:($v*2);top:8px;}
+@media screen and (min-width:600px) {
+  h1 { font-size: 4rem; line-height:($v*3);top:14px;  }
+  h2 { font-size: 3rem; line-height:($v*2);top:4px; }
+  // hmmm.
+  h3 { font-size: 2rem; line-height:($v*2);top:8px;}
+}
+
+h4, h5, h6 {
+  color:$cPurple;
+  font-family:$fBody;
+  font-weight:bold;
+  font-style:normal;
+  text-transform:uppercase;
+}
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1 rem; }
+h6 { font-size: 1 rem; }
+// }}}
+
+p {
+  margin-top:0;
+  margin-bottom:$v;
+}
+
+strong {
+  // This fixes line-height expansion.
+  vertical-align:top;
+}
+
+// Lists {{{
+ul, ol {
+  margin:$v 0;
+  padding:0 0 0 1.5em;
+  ul, ol {
+    margin-top:0;
+    margin-bottom:0;
+  }
+}
+// Always use disc for UL
+ul>li, li ul>li {
+  list-style-type:disc;
+}
+ol>li, li ol>li {
+  list-style-type:decimal;
+}
+// }}}
+
+// Links {{{
+a {
+  color:$cPurple;
+  text-decoration:none;
+  font-weight:bold;
+  // This fixes line-height expansion.
+  vertical-align:top;
+
+  &:visited {
+    color:$cGrey;
+  }
+  &:hover {
+    color:black;
+    background-color:$cBlueGreyLightBg;
+  }
+  &:active {
+    background-color:$cPurple;
+    color:white;
+  }
+}
+// }}}
+
+// Form elements, inc links as buttons {{{
+
+button, input[type="submit"], a.button {
+  display:inline-block;
+  background-color:$cBlueGreyLightBg;
+  background-color:white;
+  color:white;
+  text-align:center;
+  border-radius: 3px;
+  border-style:none;
+  padding:(0.25*$v) 1em;
+  font-size:$v;
+  @include fHeading;
+  line-height:1.4;
+  margin-bottom:(0.5*$v);
+  margin-top:($v);
+  font-size:$baseFont;
+  color:$cBlackFg;
+  transition:background-color 0.2s;
+  box-shadow:1px 1px 2px rgba(0,0,0,0.2);
+
+  &.primary {
+    background-color: $cAmber;
+    color:black;
+  }
+
+  &:hover {
+    box-shadow:2px 2px 8px rgba(0,0,0,0.3);
+  }
+  &:active {
+    transform:translateY(-1px);
+    box-shadow:2px 2px 8px rgba(0,0,0,0.3) inset;
+  }
+  &.caution:hover {
+    background-color: $cRed;
+  }
+}
+
+input[type="checkbox"] {
+  display:none;
+
+  & + label {
+    display:inline-block;
+    &:before {
+      background-image:url('../images/sprite.png');
+      background-position:(-24px*4) 0;
+      background-repeat:no-repeat;
+      width:24px;
+      height:24px;
+      display:inline-block;
+      vertical-align:middle;
+      margin-right:0.5rem;
+      content:"";
+    }
+  }
+
+  &:checked + label {
+    color:$cGreenFg;
+    font-weight:bold;
+
+    &:before {
+      background-position:(-24px*3) 0;
+    }
+  }
+
+}
+
+// }}}
+// Action ribbon {{{
+ul.actions {
+  margin:0 -1rem 0 0;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  li {
+    margin:0 1rem 0 0;
+    padding:0;
+    display:inline-block;
+    flex:1 0;
+    &:last-child {
+      flex:2 0;
+    }
+    a {
+      margin:($v/2) 0 ($v/2) 0;
+      display:block;
+      white-space:pre;
+    }
+  }
+}
+@media screen and (min-width:1000px) {
+  ul.actions {
+    width:100%;
+    margin-right:0;
+  }
+}
+// }}}
+// Image layouts {{{
+.img-overlay {
+  .layout-container {
+    .img {
+      img {
+        border:solid 1px $cPurple;
+        width:100%;
+        height:auto;
+        display:block;
+      }
+    }
+    .img-text {
+      // 1px at top is just to encompass child h2's margin
+      padding:1px 2rem;
+      background-color:$cPurple;
+      color:white;
+      h1 {
+        color:white;
+      }
+      a, a:visited {
+        color:white;
+        text-decoration:underline;
+      }
+      a:hover {
+        background-color:white;
+        color:$cPurple;
+      }
+    }
+  }
+}
+
+@media screen and (min-width:1000px) {
+  .img-overlay {
+    background-image:url('../images/mega.svg');
+    background-size:100% 100%;
+    position:relative;
+    .bg-image {
+      position:absolute;
+      width:100%;
+      height:100%;
+      z-index:-1;
+    }
+    .layout-container {
+      display:flex;
+      align-items:center;
+      .img {
+        flex:1 1 60%;
+        margin:$v 0 0;
+      }
+      .img-text {
+        flex:1 1 40%;
+        background-color:transparent;
+      }
+    }
+  }
+}
+
+// }}}
+// Sprites {{{
+span.sprite {
+  background-image:url('../images/sprite.png');
+  background-position:0 0;
+  background-repeat:no-repeat;
+  width:24px;
+  height:24px;
+  display:inline-block;
+  vertical-align:middle;
+  margin-right:0.5rem;
+
+  &.location    { background-position:(-24px*0) 0; }
+  &.issue       { background-position:(-24px*1) 0; }
+  &.resource    { background-position:(-24px*2) 0; }
+  &.action      { background-position:(-24px*3) 0; }
+  &.todo        { background-position:(-24px*4) 0; }
+  &.fossil-free { background-position:(-24px*5) 0; }
+}
+
+// }}}
+// backgrounds {{{
+.bg {
+  padding:1px 0 ($v*2);
+  background-repeat:repeat;
+  position:relative;
+  &:before {
+      top:0;
+      left:0;
+      background-image: url("../images/hr.png");
+      background-size: 100% 100%;
+      content: "";
+      display: block;
+      height: 6px;
+      width: 100%;
+      position:absolute;
+      margin-top:-3px;
+  }
+  &.paper { background-image:url('../images/paperXwrinkle.jpg'); }
+  &.wall { background-image:url('../images/wall.jpg'); }
+  &.network { background-image:url('../images/network.png'); }
+  &.line-after:after {
+      background-image: url("../images/hr.png");
+      background-size: 100% 100%;
+      content: "";
+      display: block;
+      height: 6px;
+      width: 100%;
+      position:absolute;
+      margin-top:-3px;
+      bottom:0;
+  }
+}
+// }}}
+// map layout {{{
+.map-layout {
+  display:flex;
+  .text {
+    flex:0 0 60%;
+    padding-right:2rem;
+    aside {
+      margin-top:$v;
+      padding:$v 2rem $v;
+      h2 {
+        margin-top:0;
+      }
+    }
+  }
+  .map {
+    flex:0 0 40%;
+    img {
+      display:block;
+      margin:0 auto;
+      max-height:80vh;
+      max-width:auto;
+    }
+  }
+}
+// }}}
+
+// these styles are for the demo layouts only. {{{
+.purple { color:$cPurple; }
+.green { color:$cGreenFg; }
+
+
+body {
+  // background-image:repeating-linear-gradient(#f8f8f8 0, #f8f8f8 1px, transparent 1px, transparent $v);
+  background-size:100% 28px;
+  background-position:left -7px;
+  padding:$v 0;
+  margin:0;
+}
+#page-container {
+}
+.layout-container {
+  margin:0 auto;
+  max-width:1280px;
+  padding:0 1rem;
+}
+@media screen and (min-width:600px) {
+.layout-container {
+  padding:0 2rem;
+}
+}
+
+.swatch {
+  .sample {
+    display:inline-block;
+    margin-right:1rem;
+    margin-bottom:$v;
+    width:($v*5.5);
+    height:($v*5);
+    text-align:center;
+    padding:1rem;
+    box-shadow:2px 2px 8px rgba(0,0,0,0.3);
+    vertical-align:top;
+  }
+}
+#styler-header {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  min-height:$v;
+  background-color:$cGrey;
+  color:white;
+  display:flex;
+  font-size:1rem;
+  padding:0 1rem;;
+  z-index:2;
+  a, a:visited {
+    color:white;
+  }
+  ul.styler-menu {
+    display:none;
+    position:absolute;
+    left:0;
+    margin:0;
+    min-width:20rem;
+    background-color:$cGrey;
+  }
+  &>div.styler-menu {
+    display:block;
+    position:relative;
+    margin-left:1rem;
+    margin-right:2rem;
+    padding:0 1rem;
+    min-height:$v;
+    a, a:visited {color:$cAmber;}
+    flex:0;
+
+    &:hover ul.styler-menu {
+      display:block;
+    }
+  }
+  &>div.title {
+    flex:1;
+  }
+}
+// }}}
