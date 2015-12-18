@@ -11,6 +11,7 @@
  */
 
 /*
+
 $app->configure([
   'headings' => [
     'This heading is relevant to my project.',
@@ -18,7 +19,7 @@ $app->configure([
   ],
   'lorem' => [
     'Write your own gibberish, then append the default',
-  ] + $app->getConfig['lorem']  );
+  ] + $app->getConfig('lorem')  ]);
 
-*/
 
+ */
